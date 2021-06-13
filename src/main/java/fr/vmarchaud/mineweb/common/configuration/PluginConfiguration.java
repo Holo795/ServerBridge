@@ -19,6 +19,8 @@ public class PluginConfiguration {
 	public String domain;
 	public Integer port;
 
+	public String discordToken = "token";
+
 	public PluginConfiguration(File path) {
 		this.path = path;
 	}

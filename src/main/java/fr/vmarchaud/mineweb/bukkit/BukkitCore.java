@@ -36,9 +36,11 @@ import fr.vmarchaud.mineweb.common.injector.NettyInjector;
 import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
+import fr.vmarchaud.mineweb.discord.DiscordApi;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
 
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -69,6 +71,7 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	private WebThread					nettyServerThread;
 	private HashMap<String, IMethod>	methods;
 	private RequestHandler				requestHandler;
+	private DiscordApi 					discordapi;
 	private PluginConfiguration			config;
 	private ScheduledStorage			storage;
 	private CommandScheduler			commandScheduler;
@@ -83,6 +86,7 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	private Gson						gson 		= new GsonBuilder().enableComplexMapKeySerialization().serializeNulls().create();
 	private FileHandler					fileHandler;
 
+	@SneakyThrows
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -126,6 +130,8 @@ public class BukkitCore extends JavaPlugin implements ICore {
 		logger.info("Registering methods ...");
 		requestHandler = new RequestHandler(instance);
 		registerMethods();
+		logger.info("Loading discord-bot ...");
+		discordapi = new DiscordApi(instance);
 		logger.info("Starting CommandScheduler ...");
 		commandScheduler = new CommandScheduler(instance, storage);
 		task = getServer().getScheduler().runTaskTimerAsynchronously(this, commandScheduler, 0, 100);
@@ -291,4 +297,6 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	public CommandScheduler getCommandScheduler() {
 		return commandScheduler;
 	}
+
+	public DiscordApi getDiscordapi() {return discordapi;}
 }

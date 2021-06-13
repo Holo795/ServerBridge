@@ -26,6 +26,10 @@ repositories {
     maven { url "http://repo.dmulloy2.net/content/groups/public/" }
 	maven { url 'https://repo.spongepowered.org/maven' }
 	mavenCentral()
+	maven {
+		name 'm2-dv8tion'
+		url 'https://m2.dv8tion.net/releases'
+	}
 	jcenter()
 	flatDir {
 		dirs 'dependencies'
@@ -49,6 +53,19 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 	compileOnly group: 'io.netty', name: 'netty-all', version: '4.1.43.Final'
 	compileOnly fileTree(include: ['*.jar'], dir: 'dependencies')
+
+	compile ("net.dv8tion:JDA:4.3.0_277"){
+		exclude module: 'opus-java'
+	}
+
+}
+
+jar {
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 }
 
 task moveIntoBukkit(type: Copy) {
