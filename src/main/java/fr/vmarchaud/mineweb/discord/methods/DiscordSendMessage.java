@@ -1,33 +1,33 @@
 package fr.vmarchaud.mineweb.discord.methods;
 
+import fr.vmarchaud.mineweb.common.ICore;
+import fr.vmarchaud.mineweb.common.IMethod;
+import fr.vmarchaud.mineweb.common.MethodHandler;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import java.util.List;
+@MethodHandler(inputs = 3, types = {String.class, String.class, String.class})
+public class DiscordSendMessage implements IMethod {
 
-public class DiscordSendMessage {
+    @Override
+    public Object execute(ICore instance, Object... inputs) {
 
-    DiscordApi api;
+        if(instance.config().discordToken.isEmpty())
+            return "error_token";
 
-    public DiscordSendMessage(DiscordApi api){
-        this.api = api;
-    }
 
-    public void sendMessage(Long channelId, String message){
-        TextChannel textChannel = api.getJda().getTextChannelById(channelId);
+        String guildId = (String) inputs[0];
+        String channelId = (String) inputs[1];
+        String message = (String) inputs[2];
+
+        Guild guild = DiscordApi.getJda().getGuildById(guildId);
+        assert guild != null;
+        TextChannel textChannel = guild.getTextChannelById(channelId);
+
         assert textChannel != null;
-        if(textChannel.canTalk()) {
-            textChannel.sendMessage(message).queue();
-        }
-    }
-
-    public String getTextChannelId(String name) {
-        List<TextChannel> channel = api.getJda().getTextChannelsByName(name, true);
-        for(TextChannel ch : channel)
-        {
-            return ch.getId();
-        }
-        return null;
+        textChannel.sendMessage(message).queue();
+        return true;
     }
 
 }

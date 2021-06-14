@@ -1,10 +1,10 @@
 package fr.vmarchaud.mineweb.discord;
 
 import fr.vmarchaud.mineweb.common.ICore;
-import fr.vmarchaud.mineweb.discord.methods.DiscordAddRole;
-import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
+import fr.vmarchaud.mineweb.discord.events.EventsListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 
 import javax.security.auth.login.LoginException;
 
@@ -12,12 +12,14 @@ public class DiscordApi {
 
     ICore api;
     JDABuilder builder;
-    JDA jda;
+    static JDA jda;
 
     public DiscordApi(ICore api) {
         this.api = api;
 
         builder = JDABuilder.createDefault(api.config().discordToken);
+        builder.setActivity(Activity.watching("Mineweb !"));
+        builder.addEventListeners(new EventsListener());
 
         try {
             if(!api.config().discordToken.isEmpty()) jda = builder.build();
@@ -25,15 +27,14 @@ public class DiscordApi {
             e.printStackTrace();
         }
 
-        init();
+        if(jda != null && jda.getGuilds().size() > 1) {
+            System.err.println("Your bot is already on an other server | Bot Shutdown");
+            jda.shutdown();
+        }
 
     }
 
-    private void init() {
-        new DiscordSendMessage(this);
-    }
-
-    public JDA getJda() {
+    public static JDA getJda() {
         return jda;
     }
 
