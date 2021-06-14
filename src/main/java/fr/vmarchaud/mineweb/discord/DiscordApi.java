@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 
 import javax.security.auth.login.LoginException;
+import java.util.Objects;
 
 public class DiscordApi {
 
@@ -29,6 +30,7 @@ public class DiscordApi {
 
         if(jda != null && jda.getGuilds().size() > 1) {
             System.err.println("Your bot is already on an other server | Bot Shutdown");
+            jda.getGuilds().get(1).leave().queue();
             jda.shutdown();
         }
 

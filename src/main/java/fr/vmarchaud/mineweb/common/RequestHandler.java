@@ -64,7 +64,7 @@ public class RequestHandler {
 		// register handshake endpoint
 		api.getHTTPRouter().post("/handshake", (request) -> this.handleHandshake(request.getRequest()));
 		api.getHTTPRouter().post("/ask", (request) -> this.handle(request.getRequest()));
-		debug = System.getenv("DEBUG") != null && System.getenv("DEBUG").equals("true");
+		debug = /*System.getenv("DEBUG") != null && System.getenv("DEBUG").equals("true")*/true;
 	}
 	
 	/**
