@@ -37,10 +37,10 @@ import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
+import fr.vmarchaud.mineweb.discord.methods.DiscordGetChannelList;
 import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
-
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -230,6 +230,7 @@ public class BukkitCore extends JavaPlugin implements ICore {
 
 		// discord methods
 		methods.put("DISCORD_SEND_MESSAGE", new DiscordSendMessage());
+		methods.put("DISCORD_GET_CHANNEL_LIST", new DiscordGetChannelList());
 		
 	}
 	
