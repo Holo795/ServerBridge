@@ -15,6 +15,7 @@ commands:
       Use /help mineweb [subcommand] for more information
       /mineweb reset - Reset the link
       /mineweb port <port> - Setup custom port
+      /mineweb bot <token> - Setup bot token
   mineweb reset:
     description: Reset plugin configuration
     usage: /mineweb reset
@@ -23,3 +24,7 @@ commands:
     description: Setup custom port
     usage: /mineweb port <port>
     permission: mineweb.port
+  mineweb bot:
+    description: Setup bot token
+    usage: /mineweb bot <token>
+    permission: mineweb.bot
