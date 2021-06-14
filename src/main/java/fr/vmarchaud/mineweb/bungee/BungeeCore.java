@@ -50,6 +50,7 @@ import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
+import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -156,6 +157,9 @@ public class BungeeCore extends Plugin implements ICore {
 		methods.put("GET_MAX_PLAYERS", new BungeeGetMaxPlayers());
 		methods.put("GET_MOTD", new BungeeGetMOTD());
 		methods.put("GET_VERSION", new BungeeGetVersion());
+
+		// discord methods
+		methods.put("DISCORD_SEND_MESSAGE", new DiscordSendMessage());
 	}
 	
 	public void setupLogger() {

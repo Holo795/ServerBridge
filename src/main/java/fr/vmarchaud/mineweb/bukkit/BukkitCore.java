@@ -37,6 +37,7 @@ import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
+import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
 
@@ -149,6 +150,14 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("mineweb")) {
+			if(args.length == 2 && args[0].equalsIgnoreCase("bot")) {
+				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.port")))
+					return false;
+
+				config.setDiscordToken(args[1]);
+				config.save(instance);
+				return true;
+			}
 			if (args.length == 1 && args[0].equalsIgnoreCase("reset")) {
 				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.port")))
 					return false;
@@ -218,6 +227,9 @@ public class BukkitCore extends JavaPlugin implements ICore {
 		methods.put("GET_MOTD", new BukkitGetMOTD());
 		methods.put("GET_VERSION", new BukkitGetVersion());
 		methods.put("GET_WHITELISTED_PLAYERS", new BukkitGetWhitelistedPlayers());
+
+		// discord methods
+		methods.put("DISCORD_SEND_MESSAGE", new DiscordSendMessage());
 		
 	}
 	
