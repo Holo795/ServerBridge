@@ -26,7 +26,7 @@ public class DiscordSendMessage implements IMethod {
         TextChannel textChannel = guild.getTextChannelById(channelId);
 
         assert textChannel != null;
-        textChannel.sendMessage(message).queue();
+        textChannel.sendMessage(message.replaceAll("\\{ENTER}", "\n")).queue();
         return true;
     }
 
