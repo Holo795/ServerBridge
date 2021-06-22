@@ -43,11 +43,11 @@ public class DiscordGetChannelList implements IMethod {
 
         switch(type) {
             case "text":
-                return textChannelList.isEmpty() ? "no_channel" : gson.toJson(textChannelList,gsonType);
+                return textChannelList.isEmpty() ? "error_no_channel" : gson.toJson(textChannelList,gsonType);
             case "voice":
-                return voiceChannelList.isEmpty() ? "no_channel" : gson.toJson(voiceChannelList,gsonType);
+                return voiceChannelList.isEmpty() ? "error_no_channel" : gson.toJson(voiceChannelList,gsonType);
             default:
-                return "no_channel";
+                return "error_no_channel";
         }
     }
 }
