@@ -15,6 +15,8 @@ public class DiscordApi {
     JDABuilder builder;
     static JDA jda;
 
+    static boolean login = false;
+
     public DiscordApi(ICore api) {
         this.api = api;
 
@@ -24,16 +26,18 @@ public class DiscordApi {
 
         try {
             if(!api.config().discordToken.isEmpty()) jda = builder.build();
+            login = true;
         } catch (LoginException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
+            login = false;
         }
 
         if(jda != null && jda.getGuilds().size() > 1) {
-            System.err.println("Your bot is already on an other server | Bot Shutdown");
-            jda.getGuilds().get(1).leave().queue();
-            jda.shutdown();
+            while(jda.getGuilds().size() > 1) {
+                jda.getGuilds().get(1).leave().queue();
+            }
+            System.err.println("Your bot is already on an other server | Server left");
         }
-
     }
 
     public static JDA getJda() {
@@ -43,4 +47,6 @@ public class DiscordApi {
     public ICore getICore(){
         return api;
     }
+    
+    public static boolean getLogin() { return login; }
 }

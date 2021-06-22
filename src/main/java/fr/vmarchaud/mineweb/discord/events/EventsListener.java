@@ -11,9 +11,8 @@ public class EventsListener extends ListenerAdapter {
     @Override
     public void onGuildJoin(GuildJoinEvent e) {
         if(DiscordApi.getJda().getGuilds().size() > 1) {
-            System.err.println("Your bot is already on an other server | Bot Shutdown");
+            System.err.println("Your bot is already on an other server | Server left");
             Objects.requireNonNull(DiscordApi.getJda().getGuildById(e.getGuild().getId())).leave().queue();
-            DiscordApi.getJda().shutdown();
         }
     }
 
