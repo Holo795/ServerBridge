@@ -64,7 +64,7 @@ public class RequestHandler {
 		// register handshake endpoint
 		api.getHTTPRouter().post("/handshake", (request) -> this.handleHandshake(request.getRequest()));
 		api.getHTTPRouter().post("/ask", (request) -> this.handle(request.getRequest()));
-		debug = /*System.getenv("DEBUG") != null && System.getenv("DEBUG").equals("true")*/true;
+		debug = System.getenv("DEBUG") != null && System.getenv("DEBUG").equals("true");
 	}
 	
 	/**
@@ -153,11 +153,10 @@ public class RequestHandler {
 			if (debug) e.printStackTrace();
 			return HttpResponseBuilder.status(HttpResponseStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		for(Command command : requests) {
 			IMethod 	method = api.getMethods().get(command.getName());
 			Object[] 	inputs = command.getArgs();
-			
 			// if we didnt found the method just continue
 			if (method == null) {
 				JsonObject res = new JsonObject();
