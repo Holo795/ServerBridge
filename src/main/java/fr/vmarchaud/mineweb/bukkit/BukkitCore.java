@@ -151,7 +151,7 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("mineweb")) {
 			if(args.length == 2 && args[0].equalsIgnoreCase("bot")) {
-				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.port")))
+				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.bot")))
 					return false;
 
 				config.setDiscordToken(args[1]);
