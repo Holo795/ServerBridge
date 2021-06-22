@@ -14,7 +14,9 @@ public class DiscordSendMessage implements IMethod {
     public Object execute(ICore instance, Object... inputs) {
 
         if(instance.config().discordToken.isEmpty())
-            return "token_empty";
+            return "error_token_empty";
+        if(!DiscordApi.getLogin())
+            return "error_bot_login";
 
 
         String channelId = (String) inputs[0];
