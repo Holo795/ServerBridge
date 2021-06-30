@@ -50,8 +50,7 @@ import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
-import fr.vmarchaud.mineweb.discord.methods.DiscordGetChannelList;
-import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
+import fr.vmarchaud.mineweb.discord.methods.*;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -162,6 +161,10 @@ public class BungeeCore extends Plugin implements ICore {
 		// discord methods
 		methods.put("DISCORD_SEND_MESSAGE", new DiscordSendMessage());
 		methods.put("DISCORD_GET_CHANNEL_LIST", new DiscordGetChannelList());
+		methods.put("DISCORD_SET_TOKEN", new DiscordSetToken());
+		methods.put("DISCORD_SET_ROLES", new DiscordSetRoles());
+		methods.put("DISCORD_GET_ROLES", new DiscordGetRoles());
+		methods.put("DISCORD_GET_USERS", new DiscordGetUsers());
 
 	}
 	

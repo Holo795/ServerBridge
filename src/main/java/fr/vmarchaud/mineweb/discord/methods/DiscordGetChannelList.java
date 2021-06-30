@@ -21,7 +21,7 @@ public class DiscordGetChannelList implements IMethod {
 
         if(instance.config().discordToken.isEmpty())
             return "error_token_empty";
-        if(!DiscordApi.getLogin())
+        if(!DiscordApi.isLogin())
             return "error_bot_login";
 
         String type = (String) inputs[0];

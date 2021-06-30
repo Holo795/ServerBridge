@@ -37,8 +37,7 @@ import fr.vmarchaud.mineweb.common.injector.WebThread;
 import fr.vmarchaud.mineweb.common.injector.router.RouteMatcher;
 import fr.vmarchaud.mineweb.common.methods.*;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
-import fr.vmarchaud.mineweb.discord.methods.DiscordGetChannelList;
-import fr.vmarchaud.mineweb.discord.methods.DiscordSendMessage;
+import fr.vmarchaud.mineweb.discord.methods.*;
 import fr.vmarchaud.mineweb.utils.CustomLogFormatter;
 import fr.vmarchaud.mineweb.utils.http.HttpResponseBuilder;
 import lombok.SneakyThrows;
@@ -150,14 +149,14 @@ public class BukkitCore extends JavaPlugin implements ICore {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("mineweb")) {
-			if(args.length == 2 && args[0].equalsIgnoreCase("bot")) {
+			/*if(args.length == 2 && args[0].equalsIgnoreCase("bot")) {
 				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.bot")))
 					return false;
 
 				config.setDiscordToken(args[1]);
 				config.save(instance);
 				return true;
-			}
+			}*/
 			if (args.length == 1 && args[0].equalsIgnoreCase("reset")) {
 				if ((sender instanceof Player) && (!sender.isOp()) && (!sender.hasPermission("mineweb.port")))
 					return false;
@@ -231,6 +230,10 @@ public class BukkitCore extends JavaPlugin implements ICore {
 		// discord methods
 		methods.put("DISCORD_SEND_MESSAGE", new DiscordSendMessage());
 		methods.put("DISCORD_GET_CHANNEL_LIST", new DiscordGetChannelList());
+		methods.put("DISCORD_SET_TOKEN", new DiscordSetToken());
+		methods.put("DISCORD_SET_ROLES", new DiscordSetRoles());
+		methods.put("DISCORD_GET_ROLES", new DiscordGetRoles());
+		methods.put("DISCORD_GET_USERS", new DiscordGetUsers());
 		
 	}
 	

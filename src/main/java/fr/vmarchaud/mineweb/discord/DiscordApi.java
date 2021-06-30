@@ -26,7 +26,6 @@ public class DiscordApi {
 
         try {
             if(!api.config().discordToken.isEmpty()) jda = builder.build();
-            login = true;
         } catch (LoginException e) {
             System.err.println(e.getMessage());
             login = false;
@@ -48,5 +47,9 @@ public class DiscordApi {
         return api;
     }
     
-    public static boolean getLogin() { return login; }
+    public static boolean isLogin() { return login; }
+
+    public static void setLogin(boolean islogin) {
+        login = islogin;
+    }
 }

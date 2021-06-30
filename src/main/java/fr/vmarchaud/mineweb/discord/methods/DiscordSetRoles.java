@@ -5,10 +5,10 @@ import fr.vmarchaud.mineweb.common.IMethod;
 import fr.vmarchaud.mineweb.common.MethodHandler;
 import fr.vmarchaud.mineweb.discord.DiscordApi;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.Role;
 
 @MethodHandler(inputs = 2, types = {String.class, String.class})
-public class DiscordSendMessage implements IMethod {
+public class DiscordSetRoles implements IMethod {
 
     @Override
     public Object execute(ICore instance, Object... inputs) {
@@ -18,16 +18,14 @@ public class DiscordSendMessage implements IMethod {
         if(!DiscordApi.isLogin())
             return "error_bot_login";
 
-
-        String channelId = (String) inputs[0];
-        String message = (String) inputs[1];
+        String userId = (String) inputs[0];
+        String roleId = (String) inputs[1];
 
         Guild guild = DiscordApi.getJda().getGuilds().get(0);
-        TextChannel textChannel = guild.getTextChannelById(channelId);
+        Role role = guild.getRoleById(roleId);
+        assert role != null;
+        guild.addRoleToMember(userId, role);
 
-        assert textChannel != null;
-        textChannel.sendMessage(message.replaceAll("\\{ENTER}", "\n")).queue();
         return true;
     }
-
 }
